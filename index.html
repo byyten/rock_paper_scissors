@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script>
+        const rnd = Math.random
+        const round = Math.round
+        const options = ['rock','paper','scissors']
+        const wins = ['rock,scissors','paper,rock','scissors,paper']
+            loses = ['rock,paper','paper,scissors','scissors,rock']
+
+
+
+        function computerChoice() {
+            return options[round(rnd() * 2)]
+        }
+
+        function playerChoice() {
+            return prompt('Choose rock, paper or scissors - use correct spelling! ', 'rock').toLowerCase()
+
+            // return options[round(rnd() * 2)]
+        }
+
+        function play(player, computer) {
+
+            if (player == computer) {
+                return 0 // draw 
+            }
+            
+            if (wins.includes([player,computer].join()) ) {
+                return 1
+            } else { 
+                return -1 
+            }
+        }
+
+        function gameOf5() {
+            player_score = 0
+            computer_score = 0
+            draws = 0
+
+            for (let n = 0; n < 5; n++) {
+                computer = computerChoice()
+                player = playerChoice()
+                result = play(player, computer)
+                switch (result) {
+                    case 0:
+                        draws++
+                        console.log('A draw, no one wins!')
+                        break;
+                    case 1:
+                        player_score++ 
+                        console.log('Congrutaltions Player, you won!')
+                    case -1:
+                        computer_score++
+                        console.log('Blast, Computer won!')
+                }
+            }
+            console.log(`At the end of ${n} rounds 
+                        Player:   ${player_score}
+                        Computer: ${computer_score})
+                        Drawn:    ${draws}`)
+
+            if (player_score == computer_score) {
+                console.log(`match drawn at ${player_score}/${computer_score}`)
+            } else if (player_score > computer_score) {
+                console.log(`Player wins ${player_score}/${computer_score}`)
+            } else {
+                console.log(`Computer wins ${computer_score}/${player_score}`)
+            }
+
+
+        }
+
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

@@ -8,11 +8,16 @@
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
-        body { 
+
+        body {
             font-family: Roboto, Verdana, Geneva, Tahoma, sans-serif;
-            padding: 0; margin: 0; height: 100vh;  
-            display: flex; flex-direction: column;
+            padding: 0;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
+
         .competitors {
             display: flex;
             min-height: 200px;
@@ -39,7 +44,7 @@
             margin: 5px
         }
 
-        button > img {
+        button>img {
             width: 40px;
         }
 
@@ -58,18 +63,26 @@
             color: aliceblue;
 
         }
-    .desc, .desc_src { max-width: 60%; font-size: 12px;}
-    .desc_src {font-weight: 800;}
+
+        .desc,
+        .desc_src {
+            max-width: 60%;
+            font-size: 12px;
+        }
+
+        .desc_src {
+            font-weight: 800;
+        }
 
         .body {
-            display: flex; 
+            display: flex;
             flex-direction: column;
             /* justify-content: center; */
             align-items: center;
             gap: 20px;
             /* width: 100%; */
             height: 100%;
-            flex: 1 ;
+            flex: 1;
         }
 
         .footer {
@@ -81,19 +94,31 @@
             color: rgb(240, 227, 239)
         }
 
-        .icon_src { font-size: 12px; } 
+        .icon_src {
+            font-size: 12px;
+        }
 
         .page_title {
-            display: flex; align-items: center; justify-content: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             /* min-height: 160px; */
         }
+
         .competitors {
             margin: 20px;
 
         }
-        .instructions { font-size: 12px; margin:  20px 0 0 0; }
-        .info { font-size: 10px; margin: 0}
 
+        .instructions {
+            font-size: 12px;
+            margin: 20px 0 0 0;
+        }
+
+        .info {
+            font-size: 10px;
+            margin: 0
+        }
     </style>
 
     <script>
@@ -125,7 +150,7 @@
             comp_choice = computerChoice()
             computer_selection.textContent = comp_choice
             set_icons('.computer', comp_choice)
-            
+
             // pcc = document.querySelector('.computer > .choices') 
             // imgs = pcc.querySelectorAll('img')
             // imgs.forEach(im => {
@@ -135,7 +160,7 @@
             //         im.style.opacity = 0.15
             //     }
             // });
-            
+
 
             user_choice = player_selection.textContent
             if (!user_choice) {
@@ -163,23 +188,23 @@
         }
 
         function reset() {
-            
+
             div_competitor = document.querySelector('.player')  //  + ' > .choices' 
             div_competitor.querySelector('.player_selection').textContent = ''
             imgs = div_competitor.querySelectorAll('img')
             imgs.forEach(im => {
-                    im.style.opacity = 1
+                im.style.opacity = 1
             });
 
             div_competitor = document.querySelector('.computer')  //  + ' > .choices' 
             div_competitor.querySelector('.computer_selection').textContent = ''
             imgs = div_competitor.querySelectorAll('img')
             imgs.forEach(im => {
-                    im.style.opacity = 1
+                im.style.opacity = 1
             });
-        }           
+        }
 
-        
+
 
 
         function play(player, computer) {
@@ -286,7 +311,7 @@
                 }
             });
         }
-        
+
     </script>
 </head>
 
@@ -295,12 +320,20 @@
         <div class="page_title">
             <h1>Rock / Paper / Scissors</h1>
         </div>
-        
-        <p class="desc">A simultaneous, zero-sum game, it has three possible outcomes: a draw, a win or a loss. A player who decides to play rock will beat another player who has chosen scissors ("rock crushes scissors" or "breaks scissors" or sometimes "blunts scissors"[4]), but will lose to one who has played paper ("paper covers rock"); a play of paper will lose to a play of scissors ("scissors cuts paper"). If both players choose the same shape, the game is tied and is usually immediately replayed to break the tie.
-        </p><p class="desc">
-           
-            Rock paper scissors is often used as a fair choosing method between two people, similar to coin flipping, drawing straws, or throwing dice in order to settle a dispute or make an unbiased group decision. Unlike truly random selection methods, however, rock paper scissors can be played with a degree of skill by recognizing and exploiting non-random behavior in opponents.</p>
-            <p class="desc_src">Wikipedia</p>
+
+        <p class="desc">A simultaneous, zero-sum game, it has three possible outcomes: a draw, a win or a loss. A player
+            who decides to play rock will beat another player who has chosen scissors ("rock crushes scissors" or
+            "breaks scissors" or sometimes "blunts scissors"[4]), but will lose to one who has played paper ("paper
+            covers rock"); a play of paper will lose to a play of scissors ("scissors cuts paper"). If both players
+            choose the same shape, the game is tied and is usually immediately replayed to break the tie.
+        </p>
+        <p class="desc">
+
+            Rock paper scissors is often used as a fair choosing method between two people, similar to coin flipping,
+            drawing straws, or throwing dice in order to settle a dispute or make an unbiased group decision. Unlike
+            truly random selection methods, however, rock paper scissors can be played with a degree of skill by
+            recognizing and exploiting non-random behavior in opponents.</p>
+        <p class="desc_src">Wikipedia</p>
 
     </div>
     <div class="body">
@@ -314,7 +347,7 @@
                     <button><img src="paper.png" class="paper" alt="paper, choose paper"></button>
                     <button><img src="scissors.png" class="scissors" alt="scissors, choose scissors"></button>
                 </div>
-    
+
                 <p class="player_selection"></p>
             </div>
             <div class="computer">
@@ -323,24 +356,24 @@
                 <div class="choices">
                     <button><img src="rock.png" class="rock" alt="rock, choose a rock"></button>
                     <button><img src="paper.png" class="paper" alt="paper, choose paper"></button>
-                    <button><img src="scissors.png" class="scissors" alt="scissors, choose scissors"></button>    
+                    <button><img src="scissors.png" class="scissors" alt="scissors, choose scissors"></button>
                 </div>
 
 
                 <p class="computer_selection"></p>
             </div>
-    
+
         </div>
         <button class="play_once">Play!</button>
         <div class="status">
             <p class="winner"></p>
-    
+
         </div>
-    
+
 
 
     </div>
- 
+
 
     <div class="footer">
         <p class="icon_src">icons courtesy of:

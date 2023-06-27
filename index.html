@@ -1,65 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 
     <style>
-        .competitors { display: flex }
-        .player, .computer { 
-            display:flex; 
-            flex-direction: column; 
-            width: 200px;
-            min-height: 100px ;
-            margin: 20px
-         }
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+        body { 
+            font-family: Roboto, Verdana, Geneva, Tahoma, sans-serif;
+            padding: 0; margin: 0; height: 100vh;  
+            display: flex; flex-direction: column;
+        }
+        .competitors {
+            display: flex;
+            min-height: 200px;
+        }
 
-         .choices {
-            display:flex
-         }
-         button {
-            width: 60px;
-            height: 30px;
+        .player,
+        .computer {
+            display: flex;
+            flex-direction: column;
+            width: 200px;
+            min-height: 100px;
+            margin: 20px
+        }
+
+        .choices {
+            display: flex
+        }
+
+        button {
+            width: 40px;
+            height: 40px;
             border: 0;
-            background-color: darkslategray;
             color: white;
             margin: 5px
-         }
+        }
+
+        button > img {
+            width: 40px;
+        }
+
+        button.play_once {
+            background-color: darkslategray;
+            width: 60px;
+            height: 30px;
+
+        }
+
+        .header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: rgb(38, 26, 114);
+            color: aliceblue;
+
+        }
+    .desc, .desc_src { max-width: 60%; font-size: 12px;}
+    .desc_src {font-weight: 800;}
+
+        .body {
+            display: flex; 
+            flex-direction: column;
+            /* justify-content: center; */
+            align-items: center;
+            gap: 20px;
+            /* width: 100%; */
+            height: 100%;
+            flex: 1 ;
+        }
+
+        .footer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgb(45, 24, 65);
+            min-height: 50px;
+            color: rgb(240, 227, 239)
+        }
+
+        .icon_src { font-size: 12px; } 
+
+        .page_title {
+            display: flex; align-items: center; justify-content: center;
+            /* min-height: 160px; */
+        }
+        .competitors {
+            margin: 20px;
+
+        }
+        .instructions { font-size: 12px; margin:  20px 0 0 0; }
+        .info { font-size: 10px; margin: 0}
+
     </style>
 
-</head>
-<body>
-
-    <div class="competitors">
-        <div class="player">
-            <p>player</p>
-            <div class="choices">
-                <button class="rock">rock</button>
-                <button class="paper">paper</button>
-                <button class="scissors">scissors</button>
-    
-            </div>
-
-            <p class="player_selection"></p>
-        </div>
-        <div class="computer">
-            <p>computer</p>
-            <p class="computer_selection"></p>
-        </div>
-    
-    </div>
-    <button class="play_once">Play!</button>
-    <div class="status">
-        <p class="winner"></p>
-
-    </div>
     <script>
         const rnd = Math.random
         const round = Math.round
-        const options = ['rock','paper','scissors']
-        const wins = ['rock,scissors','paper,rock','scissors,paper']
-            loses = ['rock,paper','paper,scissors','scissors,rock']
+        const options = ['rock', 'paper', 'scissors']
+        const wins = ['rock,scissors', 'paper,rock', 'scissors,paper']
+        loses = ['rock,paper', 'paper,scissors', 'scissors,rock']
 
         let player, player_selection, player_score
         let rock, paper, scissor
@@ -78,45 +120,78 @@
         }
 
         function play_once() {
-            
+
 
             comp_choice = computerChoice()
             computer_selection.textContent = comp_choice
+            set_icons('.computer', comp_choice)
+            
+            // pcc = document.querySelector('.computer > .choices') 
+            // imgs = pcc.querySelectorAll('img')
+            // imgs.forEach(im => {
+            //     if (im.classList == comp_choice) {
+            //         im.style.opacity = 1
+            //     } else {
+            //         im.style.opacity = 0.15
+            //     }
+            // });
+            
 
             user_choice = player_selection.textContent
             if (!user_choice) {
                 alert('gotta choose one or other, no game')
                 return
             }
-            
+
             result = play(user_choice, comp_choice)
             switch (result) {
                 case 0:
                     res_message = ('A draw, no one wins!')
                     break;
                 case 1:
-                        
-                res_message = ('Congrutaltions Player, you won!')
+
+                    res_message = ('Congrutaltions Player, you won!')
                     break;
                 case -1:
                     //                        computer_score++
                     res_message = ('Blast, Computer won!')
                     break;
             }
-            winner.textContent = res_message 
-            
+            winner.textContent = res_message
+            setTimeout(reset, 2000)
+
         }
+
+        function reset() {
+            
+            div_competitor = document.querySelector('.player')  //  + ' > .choices' 
+            div_competitor.querySelector('.player_selection').textContent = ''
+            imgs = div_competitor.querySelectorAll('img')
+            imgs.forEach(im => {
+                    im.style.opacity = 1
+            });
+
+            div_competitor = document.querySelector('.computer')  //  + ' > .choices' 
+            div_competitor.querySelector('.computer_selection').textContent = ''
+            imgs = div_competitor.querySelectorAll('img')
+            imgs.forEach(im => {
+                    im.style.opacity = 1
+            });
+        }           
+
+        
+
 
         function play(player, computer) {
 
             if (player == computer) {
                 return 0 // draw 
             }
-            
-            if (wins.includes([player,computer].join()) ) {
+
+            if (wins.includes([player, computer].join())) {
                 return 1
-            } else { 
-                return -1 
+            } else {
+                return -1
             }
         }
 
@@ -135,7 +210,7 @@
                         console.log('A draw, no one wins!')
                         break;
                     case 1:
-                        player_score++ 
+                        player_score++
                         console.log('Congrutaltions Player, you won!')
                         break;
                     case -1:
@@ -145,9 +220,9 @@
                 }
             }
             console.log(`At the end of ${N} rounds 
-                        Player:   ${player_score}
-                        Computer: ${computer_score})
-                        Drawn:    ${draws}`)
+                    Player:   ${player_score}
+                    Computer: ${computer_score})
+                    Drawn:    ${draws}`)
 
             if (player_score == computer_score) {
                 console.log(`match drawn at ${player_score}/${computer_score}`)
@@ -161,35 +236,120 @@
         }
 
         function configure() {
-            player = document.querySelector('div.player') 
-            rock = document.querySelector('button.rock')
-            paper = document.querySelector('button.paper')
-            scissor = document.querySelector('button.scissors')
+            player = document.querySelector('div.player')
+            // rock = document.querySelector('button.rock').querySelector('img')
+            // paper = document.querySelector('button.paper').querySelector('img')
+            // scissor = document.querySelector('button.scissors').querySelector('img')
+
+            rock = document.querySelector('img.rock')
+            paper = document.querySelector('img.paper')
+            scissor = document.querySelector('img.scissors')
+
             player_selection = document.querySelector('p.player_selection')
             computer = document.querySelector('div.computer')
             computer_selection = document.querySelector('p.computer_selection')
             status = document.querySelector('div.status')
             winner = document.querySelector('p.winner')
- 
-        
+
+
             play_game = document.querySelector('button.play_once')
             play_game.addEventListener('click', (evt) => {
                 play_once()
             })
 
-
-            // [rock, paper, scissor].forEach(btn => {
-            //      btn.addEventListener('click', () => {
-            //          player_selection.textContent = this.classList
-                    
-            //      })
-            //  })
-
+            rock.addEventListener('click', evt => {
+                player_selection.textContent = evt.target.classList
+                set_icons('.player', evt.target.classList)
+            })
+            paper.addEventListener('click', evt => {
+                player_selection.textContent = evt.target.classList
+                set_icons('.player', evt.target.classList)
+            })
+            scissor.addEventListener('click', evt => {
+                player_selection.textContent = evt.target.classList
+                set_icons('.player', evt.target.classList)
+            })
 
         }
 
         window.onload = configure
 
+
+        function set_icons(competitor, choice) {
+            div_competitor = document.querySelector(competitor)  //  + ' > .choices' 
+            imgs = div_competitor.querySelectorAll('img')
+            imgs.forEach(im => {
+                if (im.classList == choice) {
+                    im.style.opacity = 1
+                } else {
+                    im.style.opacity = 0.15
+                }
+            });
+        }
+        
     </script>
+</head>
+
+<body>
+    <div class="header">
+        <div class="page_title">
+            <h1>Rock / Paper / Scissors</h1>
+        </div>
+        
+        <p class="desc">A simultaneous, zero-sum game, it has three possible outcomes: a draw, a win or a loss. A player who decides to play rock will beat another player who has chosen scissors ("rock crushes scissors" or "breaks scissors" or sometimes "blunts scissors"[4]), but will lose to one who has played paper ("paper covers rock"); a play of paper will lose to a play of scissors ("scissors cuts paper"). If both players choose the same shape, the game is tied and is usually immediately replayed to break the tie.
+        </p><p class="desc">
+           
+            Rock paper scissors is often used as a fair choosing method between two people, similar to coin flipping, drawing straws, or throwing dice in order to settle a dispute or make an unbiased group decision. Unlike truly random selection methods, however, rock paper scissors can be played with a degree of skill by recognizing and exploiting non-random behavior in opponents.</p>
+            <p class="desc_src">Wikipedia</p>
+
+    </div>
+    <div class="body">
+        <b class="instructions">Player, click either the rock, paper or scissors icons, then click Play</b>
+        <p class="info">Clicking Play will trigger the computer choice. The game resets after 2 seconds</p>
+        <div class="competitors">
+            <div class="player">
+                <p>player</p>
+                <div class="choices">
+                    <button><img src="rock.png" class="rock" alt="rock, choose a rock"></button>
+                    <button><img src="paper.png" class="paper" alt="paper, choose paper"></button>
+                    <button><img src="scissors.png" class="scissors" alt="scissors, choose scissors"></button>
+                </div>
+    
+                <p class="player_selection"></p>
+            </div>
+            <div class="computer">
+                <p>computer</p>
+
+                <div class="choices">
+                    <button><img src="rock.png" class="rock" alt="rock, choose a rock"></button>
+                    <button><img src="paper.png" class="paper" alt="paper, choose paper"></button>
+                    <button><img src="scissors.png" class="scissors" alt="scissors, choose scissors"></button>    
+                </div>
+
+
+                <p class="computer_selection"></p>
+            </div>
+    
+        </div>
+        <button class="play_once">Play!</button>
+        <div class="status">
+            <p class="winner"></p>
+    
+        </div>
+    
+
+
+    </div>
+ 
+
+    <div class="footer">
+        <p class="icon_src">icons courtesy of:
+            https://static.vecteezy.com/system/resources/previews/000/691/494/large_2x/rock-paper-scissors-icons-vector.jpg
+        </p>
+    </div>
+
+
+
 </body>
+
 </html>

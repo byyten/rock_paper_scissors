@@ -5,6 +5,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 
+    <style>
+        .competitors { display: flex }
+        .player, .computer { 
+            display:flex; 
+            flex-direction: column; 
+            width: 200px;
+            min-height: 100px ;
+            margin: 20px
+         }
+
+         .choices {
+            display:flex
+         }
+         button {
+            width: 60px;
+            height: 30px;
+            border: 0;
+            background-color: darkslategray;
+            color: white;
+            margin: 5px
+         }
+    </style>
+
+</head>
+<body>
+
+    <div class="competitors">
+        <div class="player">
+            <p>player</p>
+            <div class="choices">
+                <button class="rock">rock</button>
+                <button class="paper">paper</button>
+                <button class="scissors">scissors</button>
+    
+            </div>
+
+            <p class="player_selection"></p>
+        </div>
+        <div class="computer">
+            <p>computer</p>
+            <p class="computer_selection"></p>
+        </div>
+    
+    </div>
+    <button class="play_once">Play!</button>
+    <div class="status">
+        <p class="winner"></p>
+
+    </div>
     <script>
         const rnd = Math.random
         const round = Math.round
@@ -12,7 +61,11 @@
         const wins = ['rock,scissors','paper,rock','scissors,paper']
             loses = ['rock,paper','paper,scissors','scissors,rock']
 
-
+        let player, player_selection, player_score
+        let rock, paper, scissor
+        let computer, computer_score, computer_selection
+        let status, winner, play_game
+        let user_choice, comp_choice
 
         function computerChoice() {
             return options[round(rnd() * 2)]
@@ -22,6 +75,36 @@
             return prompt('Choose rock, paper or scissors - use correct spelling! ', 'rock').toLowerCase()
 
             // return options[round(rnd() * 2)]
+        }
+
+        function play_once() {
+            
+
+            comp_choice = computerChoice()
+            computer_selection.textContent = comp_choice
+
+            user_choice = player_selection.textContent
+            if (!user_choice) {
+                alert('gotta choose one or other, no game')
+                return
+            }
+            
+            result = play(user_choice, comp_choice)
+            switch (result) {
+                case 0:
+                    res_message = ('A draw, no one wins!')
+                    break;
+                case 1:
+                        
+                res_message = ('Congrutaltions Player, you won!')
+                    break;
+                case -1:
+                    //                        computer_score++
+                    res_message = ('Blast, Computer won!')
+                    break;
+            }
+            winner.textContent = res_message 
+            
         }
 
         function play(player, computer) {
@@ -37,12 +120,12 @@
             }
         }
 
-        function gameOf5() {
+        function gameOfN(N = 5) {
             player_score = 0
             computer_score = 0
             draws = 0
 
-            for (let n = 0; n < 5; n++) {
+            for (let n = 0; n < N; n++) {
                 computer = computerChoice()
                 player = playerChoice()
                 result = play(player, computer)
@@ -54,12 +137,14 @@
                     case 1:
                         player_score++ 
                         console.log('Congrutaltions Player, you won!')
+                        break;
                     case -1:
                         computer_score++
                         console.log('Blast, Computer won!')
+                        break;
                 }
             }
-            console.log(`At the end of ${n} rounds 
+            console.log(`At the end of ${N} rounds 
                         Player:   ${player_score}
                         Computer: ${computer_score})
                         Drawn:    ${draws}`)
@@ -75,10 +160,36 @@
 
         }
 
+        function configure() {
+            player = document.querySelector('div.player') 
+            rock = document.querySelector('button.rock')
+            paper = document.querySelector('button.paper')
+            scissor = document.querySelector('button.scissors')
+            player_selection = document.querySelector('p.player_selection')
+            computer = document.querySelector('div.computer')
+            computer_selection = document.querySelector('p.computer_selection')
+            status = document.querySelector('div.status')
+            winner = document.querySelector('p.winner')
+ 
+        
+            play_game = document.querySelector('button.play_once')
+            play_game.addEventListener('click', (evt) => {
+                play_once()
+            })
+
+
+            // [rock, paper, scissor].forEach(btn => {
+            //      btn.addEventListener('click', () => {
+            //          player_selection.textContent = this.classList
+                    
+            //      })
+            //  })
+
+
+        }
+
+        window.onload = configure
 
     </script>
-</head>
-<body>
-    
 </body>
 </html>
